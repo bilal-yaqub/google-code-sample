@@ -88,8 +88,17 @@ class VideoPlayer:
 
     def continue_video(self):
         """Resumes playing the current video."""
+        if self.currentlyPlaying != "":
+            print("Cannot continue video: Video is not paused")
+            return
 
-        print("continue_video needs implementation")
+        if self.currentlyPaused != "":
+            print(f"Continuing video: {self.currentlyPaused}")
+            self.currentlyPlaying = self.currentlyPaused
+            self.currentlyPaused = ""
+            return
+
+        print("Cannot continue video: No video is currently playing")
 
     def show_playing(self):
         """Displays video currently playing."""
