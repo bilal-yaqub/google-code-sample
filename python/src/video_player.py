@@ -1,6 +1,7 @@
 """A video player class."""
 
 from .video_library import VideoLibrary
+from random import randint
 
 
 class VideoPlayer:
@@ -49,8 +50,15 @@ class VideoPlayer:
 
     def play_random_video(self):
         """Plays a random video from the video library."""
+        randomNumber = randint(
+            0, (len(self._video_library.get_all_videos()) - 1))
+        randomVideo = self._video_library.get_all_videos()[randomNumber].title
 
-        print("play_random_video needs implementation")
+        if self.currentlyPlaying != "":
+            print(f"Stopping video: {self.currentlyPlaying}")
+
+        self.currentlyPlaying = randomVideo
+        print(f"Playing video: {randomVideo}")
 
     def pause_video(self):
         """Pauses the current video."""
