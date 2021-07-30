@@ -18,10 +18,16 @@ class VideoPlayer:
 
     def show_all_videos(self):
         """Returns all videos."""
+        listOfTitles = []
+
+        for video in self._video_library.get_all_videos():
+            listOfTitles.append(video.title)
 
         print("Here is a list of all the available videos: ")
-        for video in self._video_library.get_all_videos():
-            print(f"{video.title} ({video.video_id}) {list(video.tags)}")
+        for word in sorted(listOfTitles, key=str.lower):
+            for video in self._video_library.get_all_videos():
+                if word == video.title:
+                    print(f"{word} ({video.video_id}) {list(video.tags)}")
 
     def play_video(self, video_id):
         """Plays the respective video.
@@ -103,7 +109,19 @@ class VideoPlayer:
     def show_playing(self):
         """Displays video currently playing."""
 
-        print("show_playing needs implementation")
+        if (self.currentlyPaused != "") or (self.currentlyPlaying != ""):
+            for video in self._video_library.get_all_videos():
+                if (video.title == self.currentlyPlaying) or (video.title == self.currentlyPaused):
+                    if self.currentlyPlaying != "":
+                        print(
+                            f"Currently playing: {video.title} ({video.video_id}) {list(video.tags)}")
+                        return
+                    if self.currentlyPaused != "":
+                        print(
+                            f"Currently playing: {video.title} ({video.video_id}) {list(video.tags)} - PAUSED")
+                        return
+
+        print("No video is currently playing")
 
     def create_playlist(self, playlist_name):
         """Creates a playlist with a given name.
