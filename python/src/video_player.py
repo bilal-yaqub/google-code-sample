@@ -23,11 +23,15 @@ class VideoPlayer:
         for video in self._video_library.get_all_videos():
             listOfTitles.append(video.title)
 
-        print("Here is a list of all the available videos: ")
+        print("Here's a list of all available videos:")
         for word in sorted(listOfTitles, key=str.lower):
             for video in self._video_library.get_all_videos():
                 if word == video.title:
-                    print(f"{word} ({video.video_id}) {list(video.tags)}")
+                    listOfTags = []
+                    for tag in video.tags:
+                        listOfTags.append(tag)
+                    print(
+                        f"{video.title} ({video.video_id}) [{' '.join(listOfTags)}]")
 
     def play_video(self, video_id):
         """Plays the respective video.
@@ -44,7 +48,7 @@ class VideoPlayer:
                 if self.currentlyPaused != "":
                     print(f"Stopping video: {self.currentlyPaused}")
 
-                print(f"Playing Video: {video.title}")
+                print(f"Playing video: {video.title}")
                 self.currentlyPlaying = video.title
                 return
 
@@ -80,7 +84,7 @@ class VideoPlayer:
         """Pauses the current video."""
 
         if self.currentlyPaused != "":
-            print(f"Video is already paused: {self.currentlyPaused}")
+            print(f"Video already paused: {self.currentlyPaused}")
             return
 
         if self.currentlyPlaying != "":
@@ -90,7 +94,7 @@ class VideoPlayer:
             print(f"Pausing video: {self.currentlyPaused}")
             return
 
-        print("No video is currently playing")
+        print("Cannot pause video: No video is currently playing")
 
     def continue_video(self):
         """Resumes playing the current video."""
@@ -113,12 +117,18 @@ class VideoPlayer:
             for video in self._video_library.get_all_videos():
                 if (video.title == self.currentlyPlaying) or (video.title == self.currentlyPaused):
                     if self.currentlyPlaying != "":
+                        listOfTags = []
+                        for tag in video.tags:
+                            listOfTags.append(tag)
                         print(
-                            f"Currently playing: {video.title} ({video.video_id}) {list(video.tags)}")
+                            f"Currently playing: {video.title} ({video.video_id}) [{' '.join(listOfTags)}]")
                         return
                     if self.currentlyPaused != "":
+                        listOfTags = []
+                        for tag in video.tags:
+                            listOfTags.append(tag)
                         print(
-                            f"Currently playing: {video.title} ({video.video_id}) {list(video.tags)} - PAUSED")
+                            f"Currently playing: {video.title} ({video.video_id}) [{' '.join(listOfTags)}] - PAUSED")
                         return
 
         print("No video is currently playing")
