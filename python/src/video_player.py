@@ -316,8 +316,8 @@ class VideoPlayer:
         if listOfMatchesVideos != []:
             print(
                 "Would you like to play any of the above? If yes, specify the number of the video.")
-            option = input(
-                "If your answer is not a valid number, we will assume it is a no. \n")
+            print("If your answer is not a valid number, we will assume it's a no.")
+            option = input()
             try:
                 option = int(option)
                 if option <= len(listOfMatchesVideos):
@@ -365,8 +365,8 @@ class VideoPlayer:
         if listOfMatchesVideos != []:
             print(
                 "Would you like to play any of the above? If yes, specify the number of the video.")
-            option = input(
-                "If your answer is not a valid number, we will assume it is a no. \n")
+            print("If your answer is not a valid number, we will assume it's a no.")
+            option = input()
             try:
                 option = int(option)
                 if option <= len(listOfMatchesVideos):
