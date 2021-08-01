@@ -161,17 +161,7 @@ class VideoPlayer:
             playlist_name: The playlist name.
             video_id: The video_id to be added.
         """
-        videoExists = False
         modified_playlist_name = playlist_name.lower()
-
-        for video in self._video_library.get_all_videos():
-            if video.video_id == video_id:
-                videoExists = True
-
-        if videoExists == False:
-            print(
-                f"Cannot remove video from {playlist_name}: Video does not exist")
-            return
 
         for playList in self.playLists:
             if playList.title == modified_playlist_name:
@@ -213,7 +203,8 @@ class VideoPlayer:
         for playList in self.playLists:
             if modified_playlist_name == playList.title:
                 if playList.getPlayList() == []:
-                    print("No videos here yet")
+                    print(f"Showing playlist: {playlist_name}")
+                    print(" No videos here yet")
                     return
 
                 print(f"Showing playlist: {playlist_name}")
@@ -223,7 +214,7 @@ class VideoPlayer:
                         listOfTags.append(tag)
                     print(
                         f"  {video.title} ({video.video_id}) [{' '.join(listOfTags)}]")
-                    return
+                return
 
         print(f"Cannot show playlist {playlist_name}: Playlist does not exist")
 
