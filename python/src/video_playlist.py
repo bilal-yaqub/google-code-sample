@@ -12,6 +12,12 @@ class Playlist:
     def addToPlaylist(self, video: Video):
         self.playList.append(video)
 
+    def removeFromPlaylist(self, video: Video):
+        self.playList.remove(video)
+
+    def clearPlaylist(self):
+        self.playList.clear()
+
     def getPlayList(self):
         return self.playList
 
