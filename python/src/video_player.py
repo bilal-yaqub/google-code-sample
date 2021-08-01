@@ -1,5 +1,6 @@
 """A video player class."""
 
+from .video_playlist import Playlist
 from .video_library import VideoLibrary
 from random import randint
 
@@ -11,6 +12,7 @@ class VideoPlayer:
         self._video_library = VideoLibrary()
         self.currentlyPlaying = ""
         self.currentlyPaused = ""
+        self.playLists = []
 
     def number_of_videos(self):
         num_videos = len(self._video_library.get_all_videos())
@@ -139,7 +141,16 @@ class VideoPlayer:
         Args:
             playlist_name: The playlist name.
         """
-        print("create_playlist needs implementation")
+        modified_playlist_name = playlist_name.lower()
+        for playList in self.playLists:
+            if playList.title == modified_playlist_name:
+                print(
+                    "Cannot create playlist: A playlist with the same name already exists")
+                return
+
+        self.playLists.append(Playlist(modified_playlist_name))
+
+        print(f"Successfully created new playlist: {playlist_name}")
 
     def add_to_playlist(self, playlist_name, video_id):
         """Adds a video to a playlist with a given name.
@@ -148,6 +159,7 @@ class VideoPlayer:
             playlist_name: The playlist name.
             video_id: The video_id to be added.
         """
+
         print("add_to_playlist needs implementation")
 
     def show_all_playlists(self):
