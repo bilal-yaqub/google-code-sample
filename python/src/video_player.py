@@ -12,6 +12,7 @@ class VideoPlayer:
         self._video_library = VideoLibrary()
         self.currentlyPlaying = ""
         self.currentlyPaused = ""
+        self.playListNames = []
         self.playLists = []
 
     def number_of_videos(self):
@@ -149,6 +150,7 @@ class VideoPlayer:
                 return
 
         self.playLists.append(Playlist(modified_playlist_name))
+        self.playListNames.append(playlist_name)
 
         print(f"Successfully created new playlist: {playlist_name}")
 
@@ -159,9 +161,10 @@ class VideoPlayer:
             playlist_name: The playlist name.
             video_id: The video_id to be added.
         """
+        modified_playlist_name = playlist_name.lower()
 
         for playList in self.playLists:
-            if playList.title == playlist_name:
+            if playList.title == modified_playlist_name:
                 for video in playList.getPlayList():
                     if video.video_id == video_id:
                         print(
@@ -182,8 +185,13 @@ class VideoPlayer:
 
     def show_all_playlists(self):
         """Display all playlists."""
+        if self.playListNames == []:
+            print("No playlists exist yet")
+            return
 
-        print("show_all_playlists needs implementation")
+        print("Showing all playlists: ")
+        for playList in sorted(self.playListNames, key=str.lower):
+            print(playList)
 
     def show_playlist(self, playlist_name):
         """Display all videos in a playlist with a given name.
