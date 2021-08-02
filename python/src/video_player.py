@@ -21,20 +21,14 @@ class VideoPlayer:
 
     def show_all_videos(self):
         """Returns all videos."""
-        listOfTitles = []
-
-        for video in self._video_library.get_all_videos():
-            listOfTitles.append(video.title)
 
         print("Here's a list of all available videos:")
-        for word in sorted(listOfTitles, key=str.lower):
-            for video in self._video_library.get_all_videos():
-                if word == video.title:
-                    listOfTags = []
-                    for tag in video.tags:
-                        listOfTags.append(tag)
-                    print(
-                        f"{video.title} ({video.video_id}) [{' '.join(listOfTags)}]")
+        for video in self._video_library.get_sorted_videos():
+            listOfTags = []
+            for tag in video.tags:
+                listOfTags.append(tag)
+            print(
+                f"{video.title} ({video.video_id}) [{' '.join(listOfTags)}]")
 
     def play_video(self, video_id):
         """Plays the respective video.

@@ -32,6 +32,20 @@ class VideoLibrary:
         """Returns all available video information from the video library."""
         return list(self._videos.values())
 
+    def get_sorted_videos(self):
+        listOfTitles = []
+        listOfSortedVideos = []
+
+        for video in self.get_all_videos():
+            listOfTitles.append(video.title)
+
+        for word in sorted(listOfTitles, key=str.lower):
+            for video in self.get_all_videos():
+                if word == video.title:
+                    listOfSortedVideos.append(video)
+
+        return listOfSortedVideos
+
     def get_video(self, video_id):
         """Returns the video object (title, url, tags) from the video library.
 
