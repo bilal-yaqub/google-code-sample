@@ -24,11 +24,7 @@ class VideoPlayer:
 
         print("Here's a list of all available videos:")
         for video in self._video_library.get_sorted_videos():
-            listOfTags = []
-            for tag in video.tags:
-                listOfTags.append(tag)
-            print(
-                f"{video.title} ({video.video_id}) [{' '.join(listOfTags)}]")
+            print(video)
 
     def play_video(self, video_id):
         """Plays the respective video.
@@ -114,18 +110,12 @@ class VideoPlayer:
             for video in self._video_library.get_all_videos():
                 if (video.title == self.currentlyPlaying) or (video.title == self.currentlyPaused):
                     if self.currentlyPlaying != "":
-                        listOfTags = []
-                        for tag in video.tags:
-                            listOfTags.append(tag)
                         print(
-                            f"Currently playing: {video.title} ({video.video_id}) [{' '.join(listOfTags)}]")
+                            f"Currently playing: {video}")
                         return
                     if self.currentlyPaused != "":
-                        listOfTags = []
-                        for tag in video.tags:
-                            listOfTags.append(tag)
                         print(
-                            f"Currently playing: {video.title} ({video.video_id}) [{' '.join(listOfTags)}] - PAUSED")
+                            f"Currently playing: {video} - PAUSED")
                         return
 
         print("No video is currently playing")
@@ -203,11 +193,8 @@ class VideoPlayer:
 
                 print(f"Showing playlist: {playlist_name}")
                 for video in playList.getPlayList():
-                    listOfTags = []
-                    for tag in video.tags:
-                        listOfTags.append(tag)
                     print(
-                        f"  {video.title} ({video.video_id}) [{' '.join(listOfTags)}]")
+                        f"  {video}")
                 return
 
         print(f"Cannot show playlist {playlist_name}: Playlist does not exist")
