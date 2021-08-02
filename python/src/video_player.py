@@ -274,25 +274,15 @@ class VideoPlayer:
             search_term: The query to be used in search.
         """
         index = 1
-        listOfTitles = []
         listOfMatchesVideos = []
 
-        for video in self._video_library.get_all_videos():
-            listOfTitles.append(video.title)
-
-        for word in sorted(listOfTitles, key=str.lower):
-            for video in self._video_library.get_all_videos():
-                if word == video.title:
-                    if ((search_term.lower()) in (video.title.lower())):
-                        if index == 1:
-                            print(f"Here are the results for {search_term}:")
-                        listOfTags = []
-                        for tag in video.tags:
-                            listOfTags.append(tag)
-                        print(
-                            f"  {index}) {video.title} ({video.video_id}) [{' '.join(listOfTags)}]")
-                        listOfMatchesVideos.append(video)
-                        index += 1
+        for video in self._video_library.get_sorted_videos():
+            if ((search_term.lower()) in (video.title.lower())):
+                if index == 1:
+                    print(f"Here are the results for {search_term}:")
+                print(f"  {index}) {video}")
+                listOfMatchesVideos.append(video)
+                index += 1
 
         if listOfMatchesVideos != []:
             print(
@@ -320,28 +310,20 @@ class VideoPlayer:
             video_tag: The video tag to be used in search.
         """
         index = 1
-        listOfTitles = []
         listOfMatchesVideos = []
 
-        for video in self._video_library.get_all_videos():
-            listOfTitles.append(video.title)
+        for video in self._video_library.get_sorted_videos():
+            listOfLowerTags = []
+            for tag in video.tags:
+                listOfLowerTags.append(tag.lower())
 
-        for word in sorted(listOfTitles, key=str.lower):
-            for video in self._video_library.get_all_videos():
-                if word == video.title:
-                    listOfTags = []
-                    listOfLowerTags = []
-                    for tag in video.tags:
-                        listOfTags.append(tag)
-                        listOfLowerTags.append(tag.lower())
-
-                    if video_tag.lower() in listOfLowerTags:
-                        if index == 1:
-                            print(f"Here are the results for {video_tag}:")
-                        print(
-                            f"  {index}) {video.title} ({video.video_id}) [{' '.join(listOfTags)}]")
-                        listOfMatchesVideos.append(video)
-                        index += 1
+            if video_tag.lower() in listOfLowerTags:
+                if index == 1:
+                    print(f"Here are the results for {video_tag}:")
+                print(
+                    f"  {index}) {video}")
+                listOfMatchesVideos.append(video)
+                index += 1
 
         if listOfMatchesVideos != []:
             print(
