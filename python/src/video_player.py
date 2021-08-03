@@ -416,4 +416,15 @@ class VideoPlayer:
         Args:
             video_id: The video_id to be allowed again.
         """
-        print("allow_video needs implementation")
+        for video in self._video_library.get_all_videos():
+            if video.video_id == video_id:
+                if video.flagged:
+                    video.allowVideo()
+                    print(
+                        f"Successfully removed flag from video: {video.title}")
+                    return
+                else:
+                    print(f"Cannot remove flag from video: Video is not flagged")
+                    return
+
+        print("Cannot remove flag from video: Video does not exist")

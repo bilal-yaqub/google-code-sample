@@ -21,6 +21,10 @@ class Video:
         self._flagged = True
         self._flagReason = reason
 
+    def allowVideo(self):
+        self._flagged = False
+        self._flagReason = ""
+
     def __str__(self) -> str:
         listOfTags = []
         for tag in self.tags:
