@@ -70,7 +70,7 @@ class VideoPlayer:
             return
 
         if (self.calledFromFlagged):
-            return
+            self.calledFromFlagged = False
         else:
             print("Cannot stop video: No video is currently playing")
 
@@ -390,19 +390,12 @@ class VideoPlayer:
             video_id: The video_id to be flagged.
             flag_reason: Reason for flagging the video.
         """
-        video_title = ""
-
         for video in self.videos:
             if video.video_id == video_id:
-                video_title = video.title
+                if (self.currentlyPaused == video.title) or (self.currentlyPlaying == video.title):
+                    self.calledFromFlagged = True
+                    self.stop_video()
 
-        if (self.currentlyPaused == video_title) or (self.currentlyPlaying == video_title):
-            self.calledFromFlagged = True
-            self.stop_video()
-            self.calledFromFlagged = False
-
-        for video in self.videos:
-            if video.video_id == video_id:
                 if video.flagged == True:
                     print("Cannot flag video: Video is already flagged")
                     return
