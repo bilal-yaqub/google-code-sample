@@ -10,21 +10,25 @@ class VideoPlayer:
 
     def __init__(self):
         self._video_library = VideoLibrary()
+        self.calledFromFlagged = False
         self.currentlyPlaying = ""
         self.currentlyPaused = ""
         self.playListNames = []
         self.playLists = []
-        self.calledFromFlagged = False
+
+        self.videos = self._video_library.get_sorted_videos()
 
     def number_of_videos(self):
-        num_videos = len(self._video_library.get_all_videos())
+        '''Returns the number of videos.'''
+
+        num_videos = len(self.videos)
         print(f"{num_videos} videos in the library")
 
     def show_all_videos(self):
         """Returns all videos."""
 
         print("Here's a list of all available videos:")
-        for video in self._video_library.get_sorted_videos():
+        for video in self.videos:
             print(video)
 
     def play_video(self, video_id):
@@ -34,7 +38,7 @@ class VideoPlayer:
             video_id: The video_id to be played.
         """
 
-        for video in self._video_library.get_all_videos():
+        for video in self.videos:
             if (video.video_id == video_id):
                 if video.flagged:
                     print(
@@ -74,7 +78,7 @@ class VideoPlayer:
         """Plays a random video from the video library."""
         listOfAvailableVideos = []
 
-        for video in self._video_library.get_all_videos():
+        for video in self.videos:
             if video.flagged == False:
                 listOfAvailableVideos.append(video)
 
@@ -126,7 +130,7 @@ class VideoPlayer:
         """Displays video currently playing."""
 
         if (self.currentlyPaused != "") or (self.currentlyPlaying != ""):
-            for video in self._video_library.get_all_videos():
+            for video in self.videos:
                 if (video.title == self.currentlyPlaying) or (video.title == self.currentlyPaused):
                     if self.currentlyPlaying != "":
                         print(
@@ -179,7 +183,7 @@ class VideoPlayer:
                             f"Cannot add video to {playlist_name}: Video already added")
                         return
 
-                for video in self._video_library.get_all_videos():
+                for video in self.videos:
                     if video.video_id == video_id:
                         if video.flagged:
                             print(
@@ -238,7 +242,7 @@ class VideoPlayer:
         videoExists = False
         modified_playlist_name = playlist_name.lower()
 
-        for video in self._video_library.get_all_videos():
+        for video in self.videos:
             if video.video_id == video_id:
                 videoExists = True
 
@@ -305,7 +309,7 @@ class VideoPlayer:
         index = 1
         listOfMatchesVideos = []
 
-        for video in self._video_library.get_sorted_videos():
+        for video in self.videos:
             if ((search_term.lower()) in (video.title.lower())):
                 if (video.flagged):
                     continue
@@ -344,7 +348,7 @@ class VideoPlayer:
         index = 1
         listOfMatchesVideos = []
 
-        for video in self._video_library.get_sorted_videos():
+        for video in self.videos:
             listOfLowerTags = []
             for tag in video.tags:
                 listOfLowerTags.append(tag.lower())
@@ -388,7 +392,7 @@ class VideoPlayer:
         """
         video_title = ""
 
-        for video in self._video_library.get_all_videos():
+        for video in self.videos:
             if video.video_id == video_id:
                 video_title = video.title
 
@@ -397,7 +401,7 @@ class VideoPlayer:
             self.stop_video()
             self.calledFromFlagged = False
 
-        for video in self._video_library.get_all_videos():
+        for video in self.videos:
             if video.video_id == video_id:
                 if video.flagged == True:
                     print("Cannot flag video: Video is already flagged")
@@ -416,7 +420,7 @@ class VideoPlayer:
         Args:
             video_id: The video_id to be allowed again.
         """
-        for video in self._video_library.get_all_videos():
+        for video in self.videos:
             if video.video_id == video_id:
                 if video.flagged:
                     video.allowVideo()
